@@ -33,6 +33,11 @@ public class UserDAO extends JpaDAO<User> {
 	public void deleteById(User object) {
 		super.deleteById(object);
 	}
+
+	@Override
+	public long getTotalRecord() {
+		return super.getTotalRecord();
+	}
 	
 	
 }
