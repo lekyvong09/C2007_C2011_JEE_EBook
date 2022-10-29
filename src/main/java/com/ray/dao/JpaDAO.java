@@ -3,9 +3,14 @@ package com.ray.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.ray.config.HibernateSessionFactoryConfig;
 
@@ -87,7 +92,28 @@ public abstract class JpaDAO<T> {
 	}
 	
 	public List<T> getListAll() {
-		return null;
+		Transaction transaction = null;
+		List<T> objectList = null;
+		try (Session session = sessionFactory.openSession()) {
+			transaction = session.beginTransaction();
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<T> criteria = builder.createQuery(_genericClass); ///_genericClass = User.class
+			Root<T> root = criteria.from(_genericClass); ///  FROM User
+			criteria.select(root); /// select * 
+///			criteria.select(root).where(builder.like(root.get("fullName"), "%tommy%"));
+			
+			Query<T> query = session.createQuery(criteria);
+			objectList = query.getResultList();
+			
+			transaction.commit();
+		} catch (Exception ex) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
+		return objectList;
 	}
 	
 	public void deleteById(T objectId) {
@@ -114,4 +140,6 @@ public abstract class JpaDAO<T> {
 			ex.printStackTrace();
 		}
 	}
+	
+	
 }
