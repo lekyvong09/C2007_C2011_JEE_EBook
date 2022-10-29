@@ -62,7 +62,7 @@ public abstract class JpaDAO<T> {
 		return object;
 	}
 	
-	public T get(Object objectId) {
+	public T getById(Object objectId) {
 		Transaction transaction = null;
 		Object queryObject = null;
 		T result = null;
@@ -90,6 +90,28 @@ public abstract class JpaDAO<T> {
 		return null;
 	}
 	
-	public void delete(T object) {
+	public void deleteById(T objectId) {
+		Transaction transaction = null;
+		Object queryObject = null;
+		
+		try (Session session = sessionFactory.openSession()) {
+			transaction = session.beginTransaction();
+			
+			// get object to delete
+			queryObject = session.get(_genericClass, (Serializable) objectId);
+			
+			if (queryObject != null) {
+				session.delete(queryObject);
+				System.out.println("Delete successful");
+			}
+			
+			transaction.commit();
+			
+		} catch (Exception ex) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
 	}
 }
