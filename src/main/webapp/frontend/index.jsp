@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My book shop</title>
+<title>My Book shop</title>
 </head>
 <body>
-	<h1>My book shop</h1>
+	<h1>Welcome to Book shop</h1>
 </body>
 </html>
