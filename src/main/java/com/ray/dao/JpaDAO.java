@@ -18,6 +18,7 @@ public abstract class JpaDAO<T> {
 	private SessionFactory sessionFactory;
 	private Class<T> _genericClass; /// _genericClass = User.Class || Product.Class
 
+	// constructor
 	public JpaDAO(Class<T> genericClass) {
 		this.sessionFactory = HibernateSessionFactoryConfig.getSessionFactory();
 		this._genericClass = genericClass;

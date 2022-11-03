@@ -1,6 +1,8 @@
 <div class="container">
 	<div class="d-flex justify-content-between align-items-center">
-		<img alt="logo" src="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/images/logo.png">
+		<a href="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/admin/">
+			<img alt="logo" src="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/images/logo.png">
+		</a>
 		
 		<div class="d-flex justify-content-end vw-50">
 			Welcome, Admin
