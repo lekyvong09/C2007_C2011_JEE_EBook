@@ -2,6 +2,8 @@
 
 </head>
 <body>
+	<%@include file="navigation.jsp" %>
+	
 	<div class="container py-5">
 		<div class="d-flex flex-column align-items-center">
 			<div style="width:350px;">
