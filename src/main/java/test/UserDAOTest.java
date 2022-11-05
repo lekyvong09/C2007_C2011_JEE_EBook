@@ -1,16 +1,22 @@
-package com.ray.dao;
+package test;
 
 import static org.junit.Assert.*;
 
 import java.util.Objects;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.ray.dao.UserDAO;
 import com.ray.entity.User;
 
 public class UserDAOTest {
+	private static UserDAO userDAO;
 	
-	
+	@BeforeClass
+	public static void setup() {
+		userDAO = new UserDAO();
+	}
 
 	@Test
 	public void testGetTotalRecord() {
@@ -19,8 +25,6 @@ public class UserDAOTest {
 
 	@Test
 	public void testCreateUser() {
-		UserDAO userDAO = new UserDAO();
-		
 		User newUser = new User("test@email.com", "test", "password");
 		User insertedUser = userDAO.create(newUser);
 		
@@ -44,7 +48,6 @@ public class UserDAOTest {
 
 	@Test
 	public void testDeleteByIdUser() {
-		UserDAO userDAO = new UserDAO();
 		userDAO.deleteById(2);
 		
 		assertTrue(Objects.isNull(userDAO.getById(2)));
