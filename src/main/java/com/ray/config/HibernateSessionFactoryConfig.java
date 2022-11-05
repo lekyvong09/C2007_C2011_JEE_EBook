@@ -8,6 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import com.ray.entity.User;
+
 public class HibernateSessionFactoryConfig {
 	private static SessionFactory sessionFactory;
 	
@@ -28,7 +30,7 @@ public class HibernateSessionFactoryConfig {
 				Configuration configuration = new Configuration();
 				configuration.setProperties(settings);
 				
-//				configuration.addAnnotatedClass();
+				configuration.addAnnotatedClass(User.class);
 				
 				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 						.applySettings(configuration.getProperties()).build();
