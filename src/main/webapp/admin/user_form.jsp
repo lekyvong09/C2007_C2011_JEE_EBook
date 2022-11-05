@@ -12,15 +12,15 @@
 		<div class="d-flex flex-column align-items-center py-5">
 			<form action="manage_user" method="post" style="width:350px;" onsubmit="return validateFormInput();">
 				<div class="form-floating mb-3">
-				  <input type="email" class="form-control" id="inputUserEmail" placeholder="name@example.com">
+				  <input name="email" type="email" class="form-control" id="inputUserEmail" placeholder="name@example.com">
 				  <label for="inputUserEmail">Email address</label>
 				</div>
 				<div class="form-floating mb-3">
-				  <input type="text" class="form-control" id="inputUserFullname" placeholder="Full name">
+				  <input name="fullName" type="text" class="form-control" id="inputUserFullname" placeholder="Full name">
 				  <label for="inputUserFullname">Full name</label>
 				</div>
 				<div class="form-floating mb-3">
-				  <input type="password" class="form-control" id="inputUserPassword" placeholder="Password">
+				  <input name="password" type="password" class="form-control" id="inputUserPassword" placeholder="Password">
 				  <label for="inputUserPassword">Password</label>
 				</div>
 				<div class="d-flex justify-content-center">

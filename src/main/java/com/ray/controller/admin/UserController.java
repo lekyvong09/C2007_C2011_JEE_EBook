@@ -16,16 +16,17 @@ import com.ray.entity.User;
 @WebServlet("/admin/manage_user")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private UserDAO userDAO;
+	
     public UserController() {
         super();
+        this.userDAO = new UserDAO();
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get data
-		UserDAO userDAO = new UserDAO();
-		List<User> userList = userDAO.getListAll();
+		List<User> userList = this.userDAO.getListAll();
 		
 		/// pass data to JSP
 		request.setAttribute("userList", userList);
@@ -36,7 +37,15 @@ public class UserController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullName");
+		String password = request.getParameter("password");
+		
+		User newUser = new User(email, fullName, password);
+		this.userDAO.create(newUser);
+		
+		response.sendRedirect("manage_user");
 	}
 
 }
