@@ -168,4 +168,30 @@ public abstract class JpaDAO<T> {
 		
 		return totalRecord;
 	}
+	
+	public List<T> getNamedEqueryWithParams(String hql, String email) {
+		Transaction transaction = null;
+		List<T> objectList = null;
+		
+		try (Session session = sessionFactory.openSession()) {
+			transaction = session.beginTransaction();
+			
+			@SuppressWarnings("unchecked")
+			Query<T> hqlQuery = session.createNamedQuery(hql);
+			
+			hqlQuery.setParameter("email", email);
+			
+			objectList = hqlQuery.getResultList();
+			
+			transaction.commit();
+			
+		} catch (Exception ex) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			ex.printStackTrace();
+		}
+		
+		return objectList;
+	}
 }
