@@ -29,13 +29,19 @@
 				
 				<tbody>
 					<c:forEach items="${userList}" var="user" varStatus="count">
+						<!-- http://localhost:8080/ebook/admin/manage_user?command=LOAD&userId=userId -->
+						<c:url var="updateLink" value="manage_user">
+							<c:param name="command" value="LOAD"/>
+							<c:param name="userId" value="${user.userId}"/>
+						</c:url>
+						
 						<tr>
 							<td>${count.index + 1}</td>
 							<td>${user.userId }</td>
 							<td>${user.email }</td>
 							<td>${user.fullName }</td>
 							<td>
-								<a href="#">Edit</a>
+								<a href="${updateLink}">Edit</a>
 								<span class="mx-3"> | </span>
 								<a href="#">Delete</a>
 							</td>

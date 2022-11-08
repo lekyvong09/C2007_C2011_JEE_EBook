@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 @NamedQueries({
-	@NamedQuery(name="User.HQL.findByEmail", query = "SELECT u FROM User u where u.email = :email")
+	@NamedQuery(name="User.HQL.findByEmail", query = "SELECT u FROM User u where u.email = :email"),
+	@NamedQuery(name="User.HQL.getUserById", query = "SELECT u FROM User u where u.userId = :userId")
 })
 public class User {
 	

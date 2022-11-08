@@ -5,6 +5,13 @@
 <body>
 	<%@include file="navigation.jsp" %>
 	
+	<c:if test="${message != null }">
+		<div class="alert alert-warning alert-dismissible fade show float-end w-25" role="alert">
+			${message }
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	</c:if>
+	
 	<div class="container py-5">
 		<h1 class="text-center mb-4">Create new user</h1>
 		<hr class="mx-auto" style="width:50%;">
@@ -12,15 +19,18 @@
 		<div class="d-flex flex-column align-items-center py-5">
 			<form action="manage_user" method="post" style="width:350px;" onsubmit="return validateFormInput();">
 				<div class="form-floating mb-3">
-				  <input name="email" type="email" class="form-control" id="inputUserEmail" placeholder="name@example.com">
+				  <input name="email" type="email" value="${ theUser.email }"
+				  		class="form-control" id="inputUserEmail" placeholder="name@example.com">
 				  <label for="inputUserEmail">Email address</label>
 				</div>
 				<div class="form-floating mb-3">
-				  <input name="fullName" type="text" class="form-control" id="inputUserFullname" placeholder="Full name">
+				  <input name="fullName" type="text" value="${ theUser.fullName }"
+				  		class="form-control" id="inputUserFullname" placeholder="Full name">
 				  <label for="inputUserFullname">Full name</label>
 				</div>
 				<div class="form-floating mb-3">
-				  <input name="password" type="password" class="form-control" id="inputUserPassword" placeholder="Password">
+				  <input name="password" type="password" value="${ theUser.password }"
+				  		class="form-control" id="inputUserPassword" placeholder="Password">
 				  <label for="inputUserPassword">Password</label>
 				</div>
 				<div class="d-flex justify-content-center">

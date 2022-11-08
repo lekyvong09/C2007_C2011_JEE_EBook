@@ -56,4 +56,16 @@ public class UserDAO extends JpaDAO<User> {
 	}
 	
 	
+	public User getUserByUserId(Integer userId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		
+		List<User> userList =super.getNamedEqueryWithParams("User.HQL.getUserById", params);
+		
+		if (userList != null && userList.size() > 0) {
+			return userList.get(0);
+		}
+		
+		return null;
+	}
 }
