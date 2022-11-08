@@ -57,7 +57,7 @@ public class UserDAOTest {
 	public void testGetUserByEmail() {
 		User user = userDAO.getUserByEmail("ray@email.com");
 		System.out.println(user);
-		//assertNotNull(user);
+		assertNotNull(user);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.ray.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -169,7 +170,7 @@ public abstract class JpaDAO<T> {
 		return totalRecord;
 	}
 	
-	public List<T> getNamedEqueryWithParams(String hql, String email) {
+	public List<T> getNamedEqueryWithParams(String hql, Map<String, Object> params) {
 		Transaction transaction = null;
 		List<T> objectList = null;
 		
@@ -179,7 +180,9 @@ public abstract class JpaDAO<T> {
 			@SuppressWarnings("unchecked")
 			Query<T> hqlQuery = session.createNamedQuery(hql);
 			
-			hqlQuery.setParameter("email", email);
+			for (Map.Entry<String, Object> entry : params.entrySet()) {
+				hqlQuery.setParameter(entry.getKey(), entry.getValue());
+			}
 			
 			objectList = hqlQuery.getResultList();
 			
