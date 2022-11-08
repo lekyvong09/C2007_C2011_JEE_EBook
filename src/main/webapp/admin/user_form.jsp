@@ -16,8 +16,12 @@
 		<h1 class="text-center mb-4">Create new user</h1>
 		<hr class="mx-auto" style="width:50%;">
 
+		<c:url var="actionLink" value="manage_user">
+			<c:param name="command" value="INSERT" />
+		</c:url>
+
 		<div class="d-flex flex-column align-items-center py-5">
-			<form action="manage_user" method="post" style="width:350px;" onsubmit="return validateFormInput();">
+			<form action="${ actionLink}" method="post" style="width:350px;" onsubmit="return validateFormInput();">
 				<div class="form-floating mb-3">
 				  <input name="email" type="email" value="${ theUser.email }"
 				  		class="form-control" id="inputUserEmail" placeholder="name@example.com">

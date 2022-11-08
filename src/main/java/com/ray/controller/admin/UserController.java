@@ -53,25 +53,20 @@ public class UserController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("message", null);
+		String theCommand = request.getParameter("command");
 		
-		String email = request.getParameter("email");
-		String fullName = request.getParameter("fullName");
-		String password = request.getParameter("password");
-		
-		User newUser = new User(email, fullName, password);
-//		this.userDAO.create(newUser);
-		String errorMessage = userService.createUser(newUser);
-		
-		if (errorMessage != null) {
-			request.setAttribute("message", errorMessage);
-			request.setAttribute("theUser", newUser);
-			RequestDispatcher rd = request.getRequestDispatcher("user_form.jsp");
-			rd.forward(request, response);
-			return;
+		if (theCommand == null) {
+			theCommand = "LIST";
 		}
 		
-		response.sendRedirect("manage_user?command=LIST");
+		switch (theCommand) {
+			case "INSERT":
+				insertUser(request, response);
+				break;
+			default:
+				getUserList(request, response);
+		}
+		
 	}
 	
 	
@@ -103,5 +98,28 @@ public class UserController extends HttpServlet {
 		session.setAttribute("theUser", userToUpdate);
 		
 		response.sendRedirect("user_form.jsp");
+	}
+	
+	
+	private void insertUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.setAttribute("message", null);
+		
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullName");
+		String password = request.getParameter("password");
+		
+		User newUser = new User(email, fullName, password);
+//		this.userDAO.create(newUser);
+		String errorMessage = userService.createUser(newUser);
+		
+		if (errorMessage != null) {
+			request.setAttribute("message", errorMessage);
+			request.setAttribute("theUser", newUser);
+			RequestDispatcher rd = request.getRequestDispatcher("user_form.jsp");
+			rd.forward(request, response);
+			return;
+		}
+		
+		response.sendRedirect("manage_user?command=LIST");
 	}
 }
