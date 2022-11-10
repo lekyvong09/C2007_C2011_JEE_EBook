@@ -11,7 +11,7 @@
 		
 		<h2 class="text-center">Quick action</h2>
 		<div class="d-flex justify-content-center">
-			<a href="user_form.jsp" class="me-4">New User</a>
+			<a href="manage_user?command=NEW" class="me-4">New User</a>
 		</div>
 		<hr class="mx-auto" style="width:50%;">
 		

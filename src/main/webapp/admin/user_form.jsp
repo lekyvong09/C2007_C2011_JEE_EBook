@@ -13,15 +13,29 @@
 	</c:if>
 	
 	<div class="container py-5">
-		<h1 class="text-center mb-4">Create new user</h1>
+		<c:if test="${theUser == null }">
+			<c:url var="actionLink" value="manage_user">
+				<c:param name="command" value="INSERT" />
+			</c:url>
+			<h1 class="text-center mb-4">Create new user</h1>
+		</c:if>
+		
+		<c:if test="${theUser != null }">
+			<c:url var="actionLink" value="manage_user">
+				<c:param name="command" value="UPDATE" />
+			</c:url>
+			<h1 class="text-center mb-4">Update user</h1>
+		</c:if>
+		
 		<hr class="mx-auto" style="width:50%;">
-
-		<c:url var="actionLink" value="manage_user">
-			<c:param name="command" value="INSERT" />
-		</c:url>
-
+		
 		<div class="d-flex flex-column align-items-center py-5">
 			<form action="${ actionLink}" method="post" style="width:350px;" onsubmit="return validateFormInput();">
+				<c:if test="${theUser != null}">
+					<input type="hidden" name="userId" value="${theUser.userId}">
+				</c:if>
+				
+				
 				<div class="form-floating mb-3">
 				  <input name="email" type="email" value="${ theUser.email }"
 				  		class="form-control" id="inputUserEmail" placeholder="name@example.com">
@@ -38,7 +52,7 @@
 				  <label for="inputUserPassword">Password</label>
 				</div>
 				<div class="d-flex justify-content-center">
-					<button type="submit" class="btn btn-primary mt-4 w-50">Sign in</button>
+					<button type="submit" class="btn btn-primary mt-4 w-50">Submit</button>
 				</div>
 			</form>
 		</div>

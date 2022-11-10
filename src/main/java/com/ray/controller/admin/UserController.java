@@ -63,6 +63,9 @@ public class UserController extends HttpServlet {
 			case "INSERT":
 				insertUser(request, response);
 				break;
+			case "UPDATE":
+				updateUser(request, response);
+				break;
 			default:
 				getUserList(request, response);
 		}
@@ -119,6 +122,19 @@ public class UserController extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		}
+		
+		response.sendRedirect("manage_user?command=LIST");
+	}
+	
+	
+	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Integer userId = Integer.valueOf(request.getParameter("userId"));
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullName");
+		String password = request.getParameter("password");
+		
+		User userToUpdate = new User(userId, email, fullName, password);
+		this.userService.update(userToUpdate);
 		
 		response.sendRedirect("manage_user?command=LIST");
 	}
