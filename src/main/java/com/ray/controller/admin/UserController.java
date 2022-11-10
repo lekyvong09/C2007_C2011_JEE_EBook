@@ -127,14 +127,21 @@ public class UserController extends HttpServlet {
 	}
 	
 	
-	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void updateUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Integer userId = Integer.valueOf(request.getParameter("userId"));
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullName");
 		String password = request.getParameter("password");
 		
 		User userToUpdate = new User(userId, email, fullName, password);
-		this.userService.update(userToUpdate);
+		String errorMessage = this.userService.update(userToUpdate);
+		
+		if (errorMessage != null) {
+			request.setAttribute("message", errorMessage);
+			RequestDispatcher rd = request.getRequestDispatcher("user_form.jsp");
+			rd.forward(request, response);
+			return;
+		}
 		
 		response.sendRedirect("manage_user?command=LIST");
 	}

@@ -30,6 +30,12 @@ public class UserService {
 	
 	
 	public String update(User user) {
+		User existUserWithEmail = userDAO.getUserByEmailAndNotUserId(user);
+		
+		if (existUserWithEmail != null) {
+			return "The email is already used by the other account";
+		}
+		
 		userDAO.update(user);
 		return null;
 	}
