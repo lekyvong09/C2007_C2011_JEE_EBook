@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.Objects;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.ray.dao.UserDAO;
 import com.ray.entity.User;
@@ -13,7 +13,7 @@ import com.ray.entity.User;
 public class UserDAOTest {
 	private static UserDAO userDAO;
 	
-	@BeforeClass
+	@BeforeAll
 	public static void setup() {
 		userDAO = new UserDAO();
 	}
@@ -25,7 +25,7 @@ public class UserDAOTest {
 
 	@Test
 	public void testCreateUser() {
-		User newUser = new User("test@email.com", "test", "password");
+		User newUser = new User("test223@email.com", "test223", "password");
 		User insertedUser = userDAO.create(newUser);
 		
 		assertTrue(insertedUser.getUserId() > 0);
@@ -48,9 +48,9 @@ public class UserDAOTest {
 
 	@Test
 	public void testDeleteByIdUser() {
-		userDAO.deleteById(2);
+		userDAO.deleteById(10);
 		
-		assertTrue(Objects.isNull(userDAO.getById(2)));
+		assertTrue(Objects.isNull(userDAO.getById(10)));
 	}
 	
 	@Test
