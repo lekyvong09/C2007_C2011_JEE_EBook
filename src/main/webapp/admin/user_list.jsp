@@ -43,7 +43,7 @@
 							<td>
 								<a href="${updateLink}">Edit</a>
 								<span class="mx-3"> | </span>
-								<a href="#">Delete</a>
+								<a href="manage_user?command=DELETE&userId=${user.userId}">Delete</a>
 							</td>
 						</tr>
 					</c:forEach>

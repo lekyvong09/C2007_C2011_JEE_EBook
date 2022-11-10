@@ -39,4 +39,9 @@ public class UserService {
 		userDAO.update(user);
 		return null;
 	}
+	
+	
+	public void deleteUser(Integer userId) {
+		this.userDAO.deleteById(userId);
+	}
 }
