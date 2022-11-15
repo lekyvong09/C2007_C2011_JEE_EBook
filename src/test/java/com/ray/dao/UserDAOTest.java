@@ -1,4 +1,4 @@
-package test;
+package com.ray.dao;
 
 import static org.junit.Assert.*;
 

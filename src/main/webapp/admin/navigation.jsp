@@ -14,7 +14,7 @@
 	<div class="d-flex justify-content-center">
 		<a href="manage_user" class="fw-bold">Users</a>
 		<span class="mx-3"> | </span>
-		<a href="#" class="fw-bold">Categories</a>
+		<a href="manage_category?command=LIST" class="fw-bold">Categories</a>
 		<span class="mx-3"> | </span>
 		<a href="#" class="fw-bold">Books</a>
 		<span class="mx-3"> | </span>

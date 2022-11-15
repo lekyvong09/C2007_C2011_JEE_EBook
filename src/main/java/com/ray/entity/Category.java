@@ -8,11 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="category")
+@NamedQueries({
+	@NamedQuery(name="Category.HQL.getByName", 
+		query = "SELECT c FROM Category c where c.name = :name"),
+	@NamedQuery(name="Category.HQL.getByNameAndNotCategoryId", 
+		query = "SELECT c FROM Category c where c.name = :name and c.categoryId != :categoryId")
+})
 public class Category {
 	
 	@Id
