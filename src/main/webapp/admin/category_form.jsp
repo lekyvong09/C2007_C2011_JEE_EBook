@@ -15,19 +15,21 @@
 	
 	
 	<div class="container py-5">
-		<c:if test="${theCategory == null }">
-			<c:url var="actionLink" value="manage_category">
-				<c:param name="command" value="INSERT" />
-			</c:url>
-			<h1 class="text-center mb-4">Create new category</h1>
-		</c:if>
-		
-		<c:if test="${theCategory != null }">
-			<c:url var="actionLink" value="manage_category">
-				<c:param name="command" value="UPDATE" />
-			</c:url>
-			<h1 class="text-center mb-4">Update category</h1>
-		</c:if>
+		<c:choose>
+			<c:when test="${ theCategory != null && not empty theCategory.categoryId }">
+				<c:url var="actionLink" value="manage_category">
+					<c:param name="command" value="UPDATE" />
+				</c:url>
+				<h1 class="text-center mb-4">Update category</h1>
+			</c:when>
+			
+			<c:otherwise>
+				<c:url var="actionLink" value="manage_category">
+					<c:param name="command" value="INSERT" />
+				</c:url>
+				<h1 class="text-center mb-4">Create new category</h1>
+			</c:otherwise>
+		</c:choose>
 		
 		<hr class="mx-auto" style="width:50%;">
 		
