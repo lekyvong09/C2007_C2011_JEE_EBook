@@ -14,7 +14,7 @@
 	</c:if>
 	
 	<div class="container py-5">
-		<form id="loginForm" method="post" action="#" class="d-flex flex-column align-items-center">
+		<form id="adminLoginForm" method="post" action="#" class="d-flex flex-column align-items-center">
 			<div style="width:350px;">
 				<h2 class="text-center">Please login</h2>
 				<div class="form-floating mb-3">
@@ -55,7 +55,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#loginForm").validate({
+			$("#adminLoginForm").validate({
 				rules: {
 					email: { required: true, email: true },
 					password: { required: true },

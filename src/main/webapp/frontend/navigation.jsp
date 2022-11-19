@@ -1,5 +1,6 @@
 <div class="d-flex justify-content-between align-items-center">
-	<img alt="logo" src="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/images/logo.png">
+	<!-- http://localhost:8080/ebook/images/logo.png -->
+	<img alt="logo" src="<c:url value="/images/logo.png" />">
 	
 	<div class="d-flex justify-content-end vw-50">
 		<input class="form-control me-3" type="text" name="keyword" size="50"/>

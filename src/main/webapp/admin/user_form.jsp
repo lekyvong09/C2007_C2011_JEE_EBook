@@ -15,19 +15,21 @@
 	
 	
 	<div class="container py-5">
-		<c:if test="${theUser == null }">
-			<c:url var="actionLink" value="manage_user">
-				<c:param name="command" value="INSERT" />
-			</c:url>
-			<h1 class="text-center mb-4">Create new user</h1>
-		</c:if>
-		
-		<c:if test="${theUser != null }">
-			<c:url var="actionLink" value="manage_user">
-				<c:param name="command" value="UPDATE" />
-			</c:url>
-			<h1 class="text-center mb-4">Update user</h1>
-		</c:if>
+		<c:choose>
+			<c:when test="${ theUser != null && not empty theUser.userId }">
+				<c:url var="actionLink" value="manage_user">
+					<c:param name="command" value="UPDATE" />
+				</c:url>
+				<h1 class="text-center mb-4">Update user</h1>
+			</c:when>
+			
+			<c:otherwise>
+				<c:url var="actionLink" value="manage_user">
+					<c:param name="command" value="INSERT" />
+				</c:url>
+				<h1 class="text-center mb-4">Create new user</h1>
+			</c:otherwise>
+		</c:choose>
 		
 		<hr class="mx-auto" style="width:50%;">
 		

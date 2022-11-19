@@ -15,6 +15,7 @@ import com.ray.dao.UserDAO;
 import com.ray.entity.User;
 import com.ray.service.UserService;
 
+/// http://localhost:8080/ebook/admin/manage_user
 @WebServlet("/admin/manage_user")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
