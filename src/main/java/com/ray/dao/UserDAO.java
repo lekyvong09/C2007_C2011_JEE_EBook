@@ -83,4 +83,19 @@ public class UserDAO extends JpaDAO<User> {
 		
 		return null;
 	}
+	
+	
+	public boolean checkLogin(String email, String password) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", email);
+		params.put("password", password);
+		
+		List<User> userList =super.getNamedEqueryWithParams("User.HQL.checkLogin", params);
+		
+		if (userList != null && userList.size() == 1) {
+			return true;
+		}
+		
+		return false;
+	}
 }

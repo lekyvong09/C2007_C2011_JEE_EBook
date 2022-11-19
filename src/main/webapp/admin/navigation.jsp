@@ -5,7 +5,7 @@
 		</a>
 		
 		<div class="d-flex justify-content-end vw-50">
-			Welcome, Admin
+			Welcome, <c:out value="${sessionScope.userEmail}" />
 			<span class="mx-3"> | </span>
 			<input type="button" value="Logout" class="btn btn-outline-primary ms-4">
 		</div>

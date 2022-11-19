@@ -60,4 +60,8 @@ public class UserDAOTest {
 		assertNotNull(user);
 	}
 
+	@Test
+	public void testLoginSuccess() {
+		assertTrue(userDAO.checkLogin("ray@email.com", "password"));
+	}
 }
