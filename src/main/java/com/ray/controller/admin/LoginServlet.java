@@ -23,11 +23,18 @@ public class LoginServlet extends HttpServlet {
     }
 
 
+    /**
+     * Manage LOGOUT
+     */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getSession().removeAttribute("userEmail");
+		response.sendRedirect(request.getContextPath() + "/admin/login.jsp");
 	}
 
 
+	/**
+	 * Manage LOGIN
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");

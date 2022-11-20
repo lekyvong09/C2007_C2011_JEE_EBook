@@ -7,7 +7,6 @@
 	
 </head>
 <body>
-	<%@include file="navigation.jsp" %>
 	
 	<c:if test="${message != null }" >
 		<input id="notification" type="hidden" value="${message }">

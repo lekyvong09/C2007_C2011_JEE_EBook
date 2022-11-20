@@ -4,11 +4,20 @@
 			<img alt="logo" src="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/images/logo.png">
 		</a>
 		
-		<div class="d-flex justify-content-end vw-50">
-			Welcome, <c:out value="${sessionScope.userEmail}" />
-			<span class="mx-3"> | </span>
-			<input type="button" value="Logout" class="btn btn-outline-primary ms-4">
-		</div>
+		<c:if test="${sessionScope.userEmail != null}" >
+			<div class="d-flex justify-content-end vw-50">
+				Welcome, <c:out value="${sessionScope.userEmail}" />
+				<span class="mx-3"> | </span>
+				<a href="<c:url value="/admin/login" />" type="button" class="btn btn-outline-secondary ms-4">Logout</a>
+			</div>
+		</c:if>
+		
+		<c:if test="${sessionScope.userEmail == null}" >
+			<div class="d-flex justify-content-end vw-50">
+				<a href="<c:url value="/admin/login.jsp" />" type="button" class="btn btn-outline-secondary ms-4">Login</a>
+			</div>
+		</c:if>
+		
 	</div>
 	
 	<div class="d-flex justify-content-center">
