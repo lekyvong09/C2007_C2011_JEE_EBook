@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="d-flex justify-content-between align-items-center">
-		<a href="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/admin/">
-			<img alt="logo" src="<%= pageContext.getServletContext().getInitParameter("baseURL")%>/images/logo.png">
+		<a href="<c:url value="/admin/" />">
+			<img alt="logo" src="<c:url value="/images/logo.png" />">
 		</a>
 		
 		<c:if test="${sessionScope.userEmail != null}" >

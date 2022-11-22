@@ -11,6 +11,11 @@
   	<param-value>http://localhost:8080</param-value>
   </context-param>
   
+  <context-param>
+  	<param-name>salt</param-name>
+  	<param-value>mysecret</param-value>
+  </context-param>
+  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
