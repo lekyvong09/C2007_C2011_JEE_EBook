@@ -2,6 +2,7 @@ package com.ray.entity;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,12 +12,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="product")
+@NamedQueries({
+	@NamedQuery(name="Product.HQL.getByName", 
+		query = "SELECT p FROM Product p where p.name = :name"),
+	@NamedQuery(name="Product.HQL.getByNameAndNotProductId", 
+		query = "SELECT p FROM Product p where p.name = :name and p.productId != :productId")
+})
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,12 +61,19 @@ public class Product {
 	@ManyToOne()
 	@JoinColumn(name="category_id")
 	private Category category;
+	
+	@Transient
+	private String base64Image;
 
 	public Product() {
 	}
 
 	public Integer getProductId() {
 		return productId;
+	}
+	
+	public String getBase64Image() {
+		return Base64.getEncoder().encodeToString(image);
 	}
 
 	public void setProductId(Integer productId) {
