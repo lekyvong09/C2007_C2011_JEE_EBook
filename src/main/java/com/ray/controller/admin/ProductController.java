@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ray.entity.Category;
 import com.ray.entity.Product;
+import com.ray.service.CategoryService;
 import com.ray.service.ProductService;
 
 
@@ -19,10 +21,12 @@ import com.ray.service.ProductService;
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProductService productService;
+    private CategoryService categoryService;
 
     public ProductController() {
         super();
         productService = new ProductService();
+        categoryService = new CategoryService();
     }
 
 
@@ -85,8 +89,11 @@ public class ProductController extends HttpServlet {
 
 	
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<Category> categoryList = categoryService.listCategory();
+		System.out.println(categoryList);
 		HttpSession session = request.getSession();
 		session.setAttribute("theProduct", null);
+		session.setAttribute("categoryList", categoryList);
 		
 		response.sendRedirect("product_form.jsp");
 	}

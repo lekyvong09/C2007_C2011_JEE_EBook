@@ -40,6 +40,16 @@
 				</c:if>
 				
 				<div class="form-floating mb-3">
+					<select name="category" class="form-select" id="selectCategory">
+						<option value="" selected>Select a category</option>
+						<c:forEach items="${categoryList}" var="category">
+							<option value="${category.categoryId }">${category.name }</option>
+						</c:forEach>
+					</select>
+					<label for="selectCategory">Category</label>
+				</div>
+				
+				<div class="form-floating mb-3">
 				  <input name="name" type="text" value="${ theProduct.name }"
 				  		class="form-control" id="inputProductName" placeholder="inputProductName">
 				  <label for="inputProductName">Title</label>
@@ -116,6 +126,13 @@
 		$("#productForm").validate({
 			rules: {
 				name: {required: true },
+				author: {required: true },
+				description: {required: true },
+				isbn: {required: true },
+				image: {required: true },
+				publishDate: {required: true },
+				price: {required: true, number: true },
+				description: {required: true },
 			},
 			errorPlacement: function(error, element) {},
 			highlight: function (element, errorClass, validClass) {
