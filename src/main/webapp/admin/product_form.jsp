@@ -80,7 +80,7 @@
 				</div>
 				
 				<div class="mb-3">
-				  <input name="image" type="file" class="form-control" >
+				  <input name="image" type="file" onchange="loadFile(event)" class="form-control" >
 				  <div class="invalid-feedback">Please choose a file image</div>
 				</div>
 				
@@ -97,6 +97,8 @@
 				  <label for="description">Description</label>
 				  <div class="invalid-feedback">Please input Description</div>
 				</div>
+				
+				<img id="preview-image-before-upload" style="width: 440px; object-fit:cover;"/>
 				
 				<div class="d-flex justify-content-center">
 					<button type="submit" class="btn btn-primary mt-4 w-50">Submit</button>
@@ -120,6 +122,15 @@
 	
 	if (notification != null && notification.value.length > 0) {
 		alertify.error(notification.value);
+	}
+</script>
+
+<script type="text/javascript">
+	function loadFile(event) {
+		if (event.target.files.length > 0) {
+			var previewImage = document.getElementById('preview-image-before-upload');
+			previewImage.src = URL.createObjectURL(event.target.files[0]);
+		}
 	}
 </script>
 
