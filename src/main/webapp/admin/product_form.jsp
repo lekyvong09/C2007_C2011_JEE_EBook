@@ -34,7 +34,9 @@
 		<hr class="mx-auto" style="width:50%;">
 		
 		<div class="d-flex flex-column align-items-center py-5">
-			<form id="productForm" action="${ actionLink}" method="post" style="width:350px;">
+			<form id="productForm" action="${ actionLink}" method="post" style="width:350px;"
+				enctype="multipart/form-data">
+				
 				<c:if test="${theProduct != null}">
 					<input type="hidden" name="productId" value="${theProduct.productId}">
 				</c:if>
@@ -57,7 +59,7 @@
 				</div>
 				
 				<div class="form-floating mb-3">
-				  <input name=author type="text" value="${ theProduct.author }"
+				  <input name="author" type="text" value="${ theProduct.author }"
 				  		class="form-control" id="inputAuthor" placeholder="inputAuthor">
 				  <label for="inputAuthor">Author</label>
 				  <div class="invalid-feedback">Please input a author</div>
@@ -126,6 +128,7 @@
 		$("#productForm").validate({
 			rules: {
 				name: {required: true },
+				category: {required: true },
 				author: {required: true },
 				description: {required: true },
 				isbn: {required: true },

@@ -1,15 +1,23 @@
 package com.ray.controller.admin;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.ray.entity.Category;
 import com.ray.entity.Product;
@@ -18,6 +26,11 @@ import com.ray.service.ProductService;
 
 
 @WebServlet("/admin/manage_product")
+@MultipartConfig(
+		fileSizeThreshold = 1024 * 1024 * 1,	// if file > 1MB, store disk instead RAM
+		maxFileSize = 1024 * 1024 * 10,			// maximum file size = 10MB
+		maxRequestSize = 1024 * 1024 * 100		//maximum request size = 100MB
+		)
 public class ProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private ProductService productService;
@@ -111,22 +124,46 @@ public class ProductController extends HttpServlet {
 	
 	
 	private void insert(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//		request.setAttribute("message", null);
-//		
-//		String name = request.getParameter("name");
-//		
-//		Product newProduct = new Product(name);
-//		String errorMessage = productService.create(newProduct);
-//		
-//		if (errorMessage != null) {
-//			request.setAttribute("message", errorMessage);
-//			request.setAttribute("theProduct", newProduct);
-//			RequestDispatcher rd = request.getRequestDispatcher("product_form.jsp");
-//			rd.forward(request, response);
-//			return;
-//		}
-//		
-//		response.sendRedirect("manage_product?command=LIST");
+		Product newProduct = new Product();
+		
+		Integer categoryId = Integer.parseInt(request.getParameter("category"));
+		Category category = categoryService.getById(categoryId);
+		
+		newProduct.setName(request.getParameter("name"));
+		newProduct.setAuthor(request.getParameter("author"));
+		newProduct.setIsbn(request.getParameter("isbn"));
+		newProduct.setPrice(new BigDecimal(request.getParameter("price")));
+		newProduct.setDescription(request.getParameter("description"));
+		newProduct.setCategory(category);
+		
+//		newProduct.setPublishDate(new Date());
+		System.out.println(request.getParameter("publishDate"));
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date publishDate = dateFormat.parse(request.getParameter("publishDate"));
+			newProduct.setPublishDate(publishDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new ServletException("The format date is yyyy-MM-dd");
+		}
+		
+		Part filePart = request.getPart("image");
+		
+		if (filePart != null & filePart.getSize() > 0) {
+			long size = filePart.getSize();
+			byte[] imageBytes = new byte[(int) size];
+			
+			InputStream inputStream = filePart.getInputStream();
+			inputStream.read(imageBytes);
+			inputStream.close();
+			
+			newProduct.setImage(imageBytes);
+		}
+		
+		this.productService.create(newProduct);
+		
+		/// http://localhost:8080/ebook/admin/
+		response.sendRedirect(request.getContextPath() + "/admin/");
 	}
 	
 	
