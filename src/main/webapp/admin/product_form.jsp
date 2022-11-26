@@ -1,5 +1,6 @@
 <%@include file="header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
@@ -39,6 +40,7 @@
 				
 				<c:if test="${theProduct != null}">
 					<input type="hidden" name="productId" value="${theProduct.productId}">
+					<input type="hidden" id="theSelectedCategory" value="${theProduct.category.name}"/>
 				</c:if>
 				
 				<div class="form-floating mb-3">
@@ -73,7 +75,8 @@
 				</div>
 				
 				<div class="form-floating mb-3">
-				  <input name="publishDate" type="date" value="${ theProduct.publishDate }"
+				  <input name="publishDate" type="date" 
+				  		value='<fmt:formatDate pattern="yyyy-MM-dd" value="${ theProduct.publishDate }" />'
 				  		class="form-control" id="publishDate" placeholder="publishDate">
 				  <label for="publishDate">Publish date</label>
 				  <div class="invalid-feedback">Please input publish date</div>
@@ -98,7 +101,18 @@
 				  <div class="invalid-feedback">Please input Description</div>
 				</div>
 				
-				<img id="preview-image-before-upload" style="width: 440px; object-fit:cover;"/>
+				<c:choose>
+					<c:when test="${ theProduct != null && not empty theProduct.productId }">
+						<img id="preview-image-before-upload" src="data:image/jpg;base64, ${theProduct.base64Image}" 
+							style="width: 240px; object-fit:cover;"/>
+					</c:when>
+					
+					<c:otherwise>
+						<img id="preview-image-before-upload" style="width: 240px; object-fit:cover;"/>
+					</c:otherwise>
+				</c:choose>
+		
+				
 				
 				<div class="d-flex justify-content-center">
 					<button type="submit" class="btn btn-primary mt-4 w-50">Submit</button>
@@ -123,6 +137,18 @@
 	if (notification != null && notification.value.length > 0) {
 		alertify.error(notification.value);
 	}
+</script>
+
+<script type="text/javascript">
+	var theSelectedCategory = document.getElementById("theSelectedCategory");
+	console.log(theSelectedCategory.value);
+	if (theSelectedCategory != null && theSelectedCategory.value.length > 0) {
+		var fieldProductCategory = document.getElementById("selectCategory");
+		var options = Array.from(fieldProductCategory.options);
+		var optionToSelect = options.find(item => item.text === theSelectedCategory.value);
+		optionToSelect.selected = true;
+	}
+	
 </script>
 
 <script type="text/javascript">
