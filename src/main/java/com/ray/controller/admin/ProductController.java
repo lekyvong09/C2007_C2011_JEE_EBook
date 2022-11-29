@@ -103,7 +103,7 @@ public class ProductController extends HttpServlet {
 	
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Category> categoryList = categoryService.listCategory();
-		System.out.println(categoryList);
+//		System.out.println(categoryList);
 		HttpSession session = request.getSession();
 		session.setAttribute("theProduct", null);
 		session.setAttribute("categoryList", categoryList);
@@ -177,20 +177,52 @@ public class ProductController extends HttpServlet {
 	
 	
 	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//		Integer productId = Integer.valueOf(request.getParameter("productId"));
-//		String name = request.getParameter("name");
-//		
-//		Product productToUpdate = new Product(productId, name);
-//		String errorMessage = productService.update(productToUpdate);
-//		
-//		if (errorMessage != null) {
-//			request.setAttribute("message", errorMessage);
-//			RequestDispatcher rd = request.getRequestDispatcher("product_form.jsp");
-//			rd.forward(request, response);
-//			return;
-//		}
-//		
-//		response.sendRedirect("manage_product?command=LIST");
+		// Product newProduct = new Product();
+		Integer productId = Integer.valueOf(request.getParameter("productId"));
+		Product productToUpdate = productService.getById(productId);
+		
+		Integer categoryId = Integer.parseInt(request.getParameter("category"));
+		Category category = categoryService.getById(categoryId);
+		
+		productToUpdate.setName(request.getParameter("name"));
+		productToUpdate.setAuthor(request.getParameter("author"));
+		productToUpdate.setIsbn(request.getParameter("isbn"));
+		productToUpdate.setPrice(new BigDecimal(request.getParameter("price")));
+		productToUpdate.setDescription(request.getParameter("description"));
+		productToUpdate.setCategory(category);
+		
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date publishDate = dateFormat.parse(request.getParameter("publishDate"));
+			productToUpdate.setPublishDate(publishDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new ServletException("The format date is yyyy-MM-dd");
+		}
+		
+		Part filePart = request.getPart("image");
+		
+		if (filePart != null & filePart.getSize() > 0) {
+			long size = filePart.getSize();
+			byte[] imageBytes = new byte[(int) size];
+			
+			InputStream inputStream = filePart.getInputStream();
+			inputStream.read(imageBytes);
+			inputStream.close();
+			
+			productToUpdate.setImage(imageBytes);
+		}
+		
+		String errorMessage = this.productService.update(productToUpdate);
+		if (errorMessage != null) {
+			request.setAttribute("message", errorMessage);
+			request.setAttribute("theProduct", productToUpdate);
+			RequestDispatcher rd = request.getRequestDispatcher("product_form.jsp");
+			rd.forward(request, response);
+			return;
+		}
+		
+		response.sendRedirect(request.getContextPath() + "/admin/manage_product?command=LIST");
 	}
 	
 	
